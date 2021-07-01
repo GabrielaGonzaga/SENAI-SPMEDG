@@ -92,52 +92,53 @@ class adm extends Component{
     }
 
 
-        // Função que faz a chamada para a API para cadastrar um evento
-        cadastrarConsulta = (event) => {
-        // Ignora o comportamento padrão do navegador
-        event.preventDefault();
-        // Define que a requisição está em andamento
-        this.setState({ isLoading : true });
+    // // Função que faz a chamada para a API para cadastrar um evento
+    // cadastrarConsulta = (consulta) => {
 
-        // Define um evento que recebe os dados do state
-        // É necessário converter o acessoLivre para int, para que o back-end consiga converter para bool ao cadastrar
-        // Como o navegador envia o dado como string, não é possível converter para bool implicitamente
-        let consulta = {
-            paciente : this.state.idPaciente,
-            medico : this.state.idMedico,
-            dataConsulta : new Date( this.state.dataConsulta),
-            situacao: this.state.situacao,
-        };
+    //     // Ignora o comportamento padrão do navegador
+    //     consulta.preventDefault();
+    //     // Define que a requisição está em andamento
+    //     this.setState({ isLoading : true });
 
-        // Define a URL e o corpo da requisição
-        axios.post('http://localhost:5000/api/Consultas', consulta, {
-            headers : {
-                'Authorization' : 'Bearer ' + localStorage.getItem('usuario-login')
-            }
-        })
+    //     // Define um evento que recebe os dados do state
+    //     // É necessário converter o acessoLivre para int, para que o back-end consiga converter para bool ao cadastrar
+    //     // Como o navegador envia o dado como string, não é possível converter para bool implicitamente
+    //     let consulta = {
+    //         paciente : this.state.idPaciente,
+    //         medico : this.state.idMedico,
+    //         dataConsulta : new Date( this.state.dataConsulta),
+    //         situacao: this.state.situacao,
+    //     };
 
-        // Verifica o retorno da requisição
-        .then(resposta => {
-            // Caso retorne 201,
-            if (resposta.status === 201) {
-                // exibe no console do navegador a mensagem abaixo
-                console.log('Consulta cadastrado!');
-                // e define que a requisição terminou
-                this.setState({ isLoading : false });
-            }
-        })
+    //     // Define a URL e o corpo da requisição
+    //     axios.post('http://localhost:5000/api/Consultas', consulta, {
+    //         headers : {
+    //             'Authorization' : 'Bearer ' + localStorage.getItem('usuario-login')
+    //         }
+    //     })
 
-        // Caso ocorra algum erro, exibe este erro no console do navegador
-        .catch(erro => {
-            console.log(erro);
-            // e define que a requisição terminou
-            this.setState({ isLoading : false });
-        })
+    //     // Verifica o retorno da requisição
+    //     .then(resposta => {
+    //         // Caso retorne 201,
+    //         if (resposta.status === 201) {
+    //             // exibe no console do navegador a mensagem abaixo
+    //             console.log('Consulta cadastrado!');
+    //             // e define que a requisição terminou
+    //             this.setState({ isLoading : false });
+    //         }
+    //     })
 
-        // Então, atualiza a lista de eventos
-        // sem o usuário precisar executar outra ação
-        .then(this.buscarConsultas)
-    };
+    //     // Caso ocorra algum erro, exibe este erro no console do navegador
+    //     .catch(erro => {
+    //         console.log(erro);
+    //         // e define que a requisição terminou
+    //         this.setState({ isLoading : false });
+    //     })
+
+    //     // Então, atualiza a lista de eventos
+    //     // sem o usuário precisar executar outra ação
+    //     .then(this.buscarConsultas)
+    // };
 
     atualizaStateCampo = (campo) => {
         this.setState({ [campo.target.name] : campo.target.value })
@@ -145,6 +146,7 @@ class adm extends Component{
 
     componentDidMount(){
         this.buscarConsultas();
+        // this.cadastrarConsulta();
     };
 
     render(){

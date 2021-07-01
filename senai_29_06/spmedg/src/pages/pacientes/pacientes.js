@@ -18,7 +18,7 @@ class pacientes extends Component{
         super(props);
         this.state = {
             listaConsultas : [],
-            nomeUsuario : '',
+            nome: '',
             idConsulta : 2,
             idPaciente :0,
             idMedico : 0,
@@ -132,7 +132,13 @@ class pacientes extends Component{
                         <img src={perfil} id="ftperfil" alt="Imagem perfil"/>
                         {/* <input type="file" id="ftperfil" onblur="carregarFoto(this.value.foto)"></input> */}
                         <div className="colu">
-                            <h5 >{} </h5>
+                            <div >{ this.state.listaConsultas.map((consulta)=> {
+                                        return(     
+                                            <h5>{consulta.idPacienteNavigation.idUsuarioNavigation.nomeUsuario}</h5>
+                                        )
+                                    })
+                                }
+                            </div>
                             <h6>Suas consultas</h6>
                         </div>
                     </div>
