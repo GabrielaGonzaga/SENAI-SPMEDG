@@ -9,7 +9,7 @@ import relogio from '../../assets/img/relogio.png';
 import paciente from '../../assets/img/paciicon.png';
 import status from '../../assets/img/status.png';
 import especialidade from '../../assets/img/especiali.png';
-import login from '../home/login';
+// import login from '../home/login';
 
 
 class medicos extends Component{
@@ -17,7 +17,7 @@ class medicos extends Component{
         super(props);
         this.state = {
             listaConsultas : [],
-            nomeUsuario : 'alberrt',
+            nomeUsuario : '',
             idConsulta : 2,
             idPaciente :0,
             idMedico : 0,
@@ -26,10 +26,9 @@ class medicos extends Component{
             situacao: ''
         }
     }
-
     buscarConsultas = () => {
         
-        axios('http://localhost:5000/api/consultas', {
+        axios('http://localhost:5000/api/consultas/meuspacientes', {
             headers : {
                 'Authorization' : 'Bearer ' + localStorage.getItem('usuario-login')
             }
@@ -46,40 +45,6 @@ class medicos extends Component{
         // Caso ocorra algum erro, mostra no console do navegador
         .catch(erro => console.log(erro))
     }
-        // axios.get('http://localhost:5000/api/consultas', {
-  
-        // email: this.state.idConsulta,
-        // senha: this.state.idMedico,
-        // senha: this.state.situacao,
-        // senha: this.state.dataConsulta,
-        // senha: this.state.idPaciente
-
-    // buscarConsultas = () => {
-    //     console.log(this.state.idEspecialidade)
-
-    //     // Chamando a API com o fetch
-    //     fetch('http://localhost:5000/api/tiposeventos', {
-    //         headers : {
-    //             'Authorization' : 'Bearer ' + localStorage.getItem('usuario-login')
-    //         }
-    //     })
-    //     // fetch( 'http://localhost:5000/api/consultas' )
-
-    //     // Define o tipo de retorno (JSON)
-    //     .then(resposta => {
-    //         // Caso a requisição não retorne um status code 200,
-    //         if (resposta.status !== 200) {
-    //             throw Error();
-    //         };
-    //         return resposta.json();
-    //     })
-
-    //    // e atualiza o state listaTiposEventos com os dados obtidos
-    //    .then(resposta => this.setState({ listaTiposEventos : resposta }))
-    //    // .then(data => console.log(data))
-       
-    //    // Caso ocorra algum erro, mostra no console do navegador
-    //    .catch((erro) => console.log(erro))
 
     componentDidMount(){
         this.buscarConsultas();
@@ -106,7 +71,7 @@ class medicos extends Component{
                 
                     <nav>
                         <input type="checkbox" id="check"/>
-                            <label for="check" className="checkbtn" id="check1">
+                            <label htmlFor="check" className="checkbtn" id="check1">
                                 <i className="fas fa-bars"></i>
                             </label>
                         <ul>
@@ -125,13 +90,20 @@ class medicos extends Component{
             
             <div className="dis">
             
-                <main className="estrutura_lm">
+            <div className="estrutura_lm">
                 
                 <div className="dis1">
                         <img src={perfil} id="ftperfil" alt="Imagem perfil"/>
                         {/* <input type="file" id="ftperfil" onblur="carregarFoto(this.value.foto)"></input> */}
                         <div className="colu">
-                            <h5 >Fernando</h5>
+                        <div >
+                            { this.state.listaConsultas.map((consulta)=> {
+                                        return(     
+                                            <h5 >{consulta.idMedicoNavigation.nome}</h5> 
+                                        )
+                                    })
+                                }
+                            </div>
                             <h6>Suas consultas</h6>
                         </div>
                     </div>
@@ -141,7 +113,7 @@ class medicos extends Component{
                         <button><div id="lupa"></div></button>    
                     </div>
    
-    <tbody>
+    <div className="wrap">
          {
             this.state.listaConsultas.map((consulta) => {
             return(
@@ -150,17 +122,17 @@ class medicos extends Component{
                                     <table className="container">
                                         <div id="rel">
                                             <img  id="icones" src={calendario} alt="icone calendario"/> 
-                                            <td id="ps"> {new Date(consulta.dataConsulta).toLocaleDateString()}</td>
+                                            <p id="ps"> {new Date(consulta.dataConsulta).toLocaleDateString()}</p>
                                         </div>
 
                                         <div id="rel">
                                             <img  id="icones" src={relogio} alt="icone relógio"/> 
-                                            <p id="ps">{new Date(consulta.dataConsulta).toLocaleDateString()}</p>
+                                            <p id="ps">{consulta.horaConsulta}</p>
                                         </div>
 
                                         <div id="rel">
                                             <img  id="icones" src={paciente} alt="icone paciente"/> 
-                                            <p id="ps">Fernando</p>
+                                            <p id="ps">{consulta.idPacienteNavigation.nome }</p>
                                         </div>
 
                                         <div id="rel">
@@ -169,7 +141,7 @@ class medicos extends Component{
                                                 <option value="1">Realizada</option>
                                                 <option value="2">Agendada</option>
                                                 <option value="3">Cancelada</option>    
-                                                <td>{consulta.situacao}</td>
+                                                <p>{consulta.situacao}</p>
                                             </select>
                                         </div>
 
@@ -190,8 +162,8 @@ class medicos extends Component{
                         );
                     })
                 }
-            </tbody>
-        </main>
+            </div>
+        </div>
         </div>  
         </div>
         );

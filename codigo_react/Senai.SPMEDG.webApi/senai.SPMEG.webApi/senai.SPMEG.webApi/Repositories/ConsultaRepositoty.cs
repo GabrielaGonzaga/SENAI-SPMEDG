@@ -139,6 +139,8 @@ namespace senai.SPMEG.webApi.Repositories
 
             .Include(c => c.IdMedicoNavigation)
 
+            .Include(c => c.IdMedicoNavigation.IdEspecialidadeNavigation)
+
             .Where(c => c.IdPacienteNavigation.IdUsuario == idUsuario)
 
             .ToList();

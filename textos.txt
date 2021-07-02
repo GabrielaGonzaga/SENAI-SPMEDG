@@ -1,0 +1,64 @@
+    {/* <select id={dia} value="date" name = "dia" id="dia" >
+                                        
+                                        <option >Dia</option>
+                                            
+                                    </select>
+
+                                    <select id="mes" name="Mês"  >
+                                        
+                                        <option>Mês </option>
+                                        <option value="01">Janeiro  </option>
+                                        <option value="02">Fevereiro</option>
+                                        <option value="03">Março    </option>
+                                        <option value="04">Abril    </option>
+                                        <option value="05">Maio     </option>
+                                        <option value="06">Junho    </option>
+                                        <option value="07">Julho    </option>
+                                        <option value="08">Agosto   </option>
+                                        <option value="09">Setembro </option>
+                                        <option value="10">Outubro  </option>
+                                        <option value="11">Novembro </option>
+                                        <option value="12">Dezembro </option>
+
+                                    </select>	
+
+                                    <select value={ano} name = "Ano" id="ano" >
+                                        <option value={ano}> </option>
+                                    </select> */}
+
+-------------------------------------------------------------------------------------------
+
+function dia() {
+
+    var dia= document.getElementById('dia');
+    for(var i = 1; i <= 31; i++){
+        dia.innerHTML+='<option value="'+i+'">'+i+'</option>'; }
+
+};
+
+function ano() {
+    var ano = document.getElementById('ano');
+   
+        for(var i = 1919; i <= 2021; i++){
+            ano.innerHTML+='<option value="'+i+'">'+i+'</option>'; }
+                
+        
+}
+
+
+class adm extends Component{
+    constructor(props){
+        super(props);
+        this.state = {
+            listaConsultas : [],
+            nome: '',
+            idConsulta : 2,
+            idPaciente :0,
+            idMedico : 0,
+            foto:'',
+            dataConsulta: '',
+            situacao: ''
+        }
+    }
+
+ 

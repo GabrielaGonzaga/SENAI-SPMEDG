@@ -59,26 +59,26 @@ class login extends Component{
           // Verifica se o tipo de usuário logado é Administrador
           // Se for, redireciona para a página de Tipos Eventos
           if (parseJwt().role === '1') {
-
+              console.log('tipos user ' + parseJwt().role)
               console.log(this.props);
 
-              this.props.history.push('/adm');
+              return this.props.history.push('/adm');
               console.log('estou logado: ' + usuarioAutenticado());
           }
 
           if (parseJwt().role === '2') {
-
+              console.log('tipos user ' + parseJwt().role)
               console.log(this.props);
 
-              this.props.history.push('/medicos');
+              return this.props.history.push('/medicos');
               console.log('estou logado: ' + usuarioAutenticado());
           }
 
           if (parseJwt().role === '3') {
-
+              console.log('tipos user ' + parseJwt().role)
               console.log(this.props);
 
-              this.props.history.push('/pacientes');
+              return this.props.history.push('/pacientes');
               console.log('estou logado: ' + usuarioAutenticado());
           }
 
@@ -104,7 +104,7 @@ atualizaStateCampo = (campo) => {
 
 render(){
   return(
-  <body className="body">
+  <div className="body">
       <div id="fundo_f" ></div> 
           <main className="estrutura" >
             <div>
@@ -186,7 +186,7 @@ render(){
                 </form>
             </div>
       </main>
-  </body>
+  </div>
     );
   }
 }

@@ -9,8 +9,6 @@ import relogio from '../../assets/img/relogio.png';
 import status from '../../assets/img/status.png';
 import medico from '../../assets/img/medicon.png';
 import especialidade from '../../assets/img/especiali.png';
-import login from '../home/login';
-import medicos from '../medicos/medicos';
 
 
 class pacientes extends Component{
@@ -22,7 +20,7 @@ class pacientes extends Component{
             idConsulta : 2,
             idPaciente :0,
             idMedico : 0,
-            foto:'',
+            horaConsulta:'',
             dataConsulta: '',
             situacao: ''
         }
@@ -30,7 +28,7 @@ class pacientes extends Component{
 
     buscarConsultas = () => {
         
-        axios('http://localhost:5000/api/consultas', {
+        axios('http://localhost:5000/api/consultas/minhasconsultas', {
             headers : {
                 'Authorization' : 'Bearer ' + localStorage.getItem('usuario-login')
             }
@@ -47,40 +45,6 @@ class pacientes extends Component{
         // Caso ocorra algum erro, mostra no console do navegador
         .catch(erro => console.log(erro))
     }
-        // axios.get('http://localhost:5000/api/consultas', {
-  
-        // email: this.state.idConsulta,
-        // senha: this.state.idMedico,
-        // senha: this.state.situacao,
-        // senha: this.state.dataConsulta,
-        // senha: this.state.idPaciente
-
-    // buscarConsultas = () => {
-    //     console.log(this.state.idEspecialidade)
-
-    //     // Chamando a API com o fetch
-    //     fetch('http://localhost:5000/api/tiposeventos', {
-    //         headers : {
-    //             'Authorization' : 'Bearer ' + localStorage.getItem('usuario-login')
-    //         }
-    //     })
-    //     // fetch( 'http://localhost:5000/api/consultas' )
-
-    //     // Define o tipo de retorno (JSON)
-    //     .then(resposta => {
-    //         // Caso a requisição não retorne um status code 200,
-    //         if (resposta.status !== 200) {
-    //             throw Error();
-    //         };
-    //         return resposta.json();
-    //     })
-
-    //    // e atualiza o state listaTiposEventos com os dados obtidos
-    //    .then(resposta => this.setState({ listaTiposEventos : resposta }))
-    //    // .then(data => console.log(data))
-       
-    //    // Caso ocorra algum erro, mostra no console do navegador
-    //    .catch((erro) => console.log(erro))
 
     componentDidMount(){
         this.buscarConsultas();
@@ -107,7 +71,7 @@ class pacientes extends Component{
                 
                     <nav>
                         <input type="checkbox" id="check"/>
-                            <label for="check" className="checkbtn" id="check1">
+                            <label htmlFor="check" className="checkbtn" id="check1">
                                 <i className="fas fa-bars"></i>
                             </label>
                         <ul>
@@ -134,7 +98,7 @@ class pacientes extends Component{
                         <div className="colu">
                             <div >{ this.state.listaConsultas.map((consulta)=> {
                                         return(     
-                                            <h5>{consulta.idPacienteNavigation.idUsuarioNavigation.nomeUsuario}</h5>
+                                            <h5>{consulta.idPacienteNavigation.nome}</h5>
                                         )
                                     })
                                 }
@@ -148,13 +112,13 @@ class pacientes extends Component{
                         <button><div id="lupa"></div></button>    
                     </div>
    
-    <tbody>
+    <div className="wrap">
          {
             this.state.listaConsultas.map((consulta) => {
             return(
                         
                             <div className="coln">
-                                    <table className="container">
+                                    <div className="container">
                                         <div id="rel">
                                             <img  id="icones" src={calendario} alt="icone calendario"/> 
                                             <td id="ps"> {new Date(consulta.dataConsulta).toLocaleDateString()}</td>
@@ -166,7 +130,7 @@ class pacientes extends Component{
                                         </div>
 
                                         <div id="rel">
-                                            <img  id="icones" src={medico} alt="icone paciente"/> 
+                                            <img  id="icones" src={medico} alt="icone médico"/> 
                                             <p id="pn" >{consulta.idMedicoNavigation.nome }</p>
                                         </div>
 
@@ -177,22 +141,15 @@ class pacientes extends Component{
 
                                         <div id="rel">
                                             <img  id="icones" src={especialidade} alt="icone especialidade"/> 
-                                            <p id="ps">Cardiologia</p>
+                                            <p id="ps">{consulta.idMedicoNavigation.idEspecialidadeNavigation.nomeEspecialidade}</p>
                                         </div>  
-                                    </table>
+                                    </div>
                             
                                 </div>             
-                           
-
-                           //<select name="select" class="select" id="select">
-                           //                 <option value="3">Médico</option>
-                           //                 <option value="2">Paciente</option>
-                           //             </select>
-                                      
                         );
                     })
                 }
-            </tbody>
+            </div>
         </main>
         </div>  
         </div>

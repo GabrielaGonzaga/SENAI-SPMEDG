@@ -367,7 +367,7 @@ h6{
  }
 
 
-tbody{
+.wrap{
     display: inline-flex;
     flex-wrap: wrap;
     grid-gap:  10px;
@@ -377,6 +377,16 @@ tbody{
     padding: 1rem;
     width: 14rem;
     height: 12rem;
+    margin-top: 5rem;
+    border: 3px solid #1A3E5A;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 3px;
+}
+
+.containeradm{
+    padding: 1rem;
+    width: 14rem;
+    height: 14rem;
     margin-top: 5rem;
     border: 3px solid #1A3E5A;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -636,7 +646,23 @@ form input[type="submit"]:hover {
     transform-origin: left;
 }
 
+#dahr{
+    display: flex;
+    gap: 17rem;
+}
 
+#dahe{
+    display: flex;
+    gap: 1rem;
+}
+
+#h2{
+    margin-bottom: -0.7rem;
+    font-family: "Poppins", sans-serif;
+    font-weight:bold;
+    font-size: 1rem;
+    color: rgba(0, 0, 0, 0.5);
+}
 
 #h4{
     font-family: "Poppins", sans-serif;
@@ -645,27 +671,16 @@ form input[type="submit"]:hover {
     color: rgba(0, 0, 0, 0.5);
 }
 
+
+
 #select2{
     width: 100%;
     margin-bottom: 0.8rem;
     height: 2.5rem;
 }
 
-select{
+.select{
     align-items: center;
-    width: 20%;
-    font-family: "Poppins", sans-serif;
-    border-radius: 3px;
-    border-width: 2px;
-    border-color: #1A3E5A;
-    font-weight: normal;
-    font-size: 1rem;
-    color: rgba(0, 0, 0, 0.651);
-    margin-bottom: 1rem;
-    transition: all .3s ease-in-out;
-}
-
-#selecthr{
     width: 20%;
     font-family: "Poppins", sans-serif;
     border-radius: 3px;
@@ -690,7 +705,21 @@ select{
     color: rgba(0, 0, 0, 0.651);
     margin-bottom: 1rem;
     transition: all .3s ease-in-out;
-    margin-top: 0.7rem;
+    
+}
+
+.select4{
+    width: 50%;
+    font-family: "Poppins", sans-serif;
+    border-radius: 3px;
+    border-width: 2px;
+    border-color: #1A3E5A;
+    font-weight: normal;
+    font-size: 1rem;
+    color: rgba(0, 0, 0, 0.651);
+    margin-bottom: 1rem;
+    transition: all .3s ease-in-out;
+    
     
 }
 

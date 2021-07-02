@@ -1,0 +1,209 @@
+
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline-width: 0;
+    text-decoration: none;
+    list-style: none;
+    /* border: 0;  */
+    /* font-family: 'Roboto', sans-serif; */ 
+ }
+
+ :root{
+    --background: #ffffff;
+    --Azul: #1A3E5A;
+    --Amarelo: #E59500;
+    --Preto: #000000;
+    --BotaoA: rgba(226, 177, 1, 0.24);
+    --BotaoP: rgba(2, 4, 15, 0.79);
+    --BotaoZ:rgba(28, 94, 121, 0.79);
+}
+
+/* .body{
+    /* background: linear-gradient(100deg, #091c2c , #004172); */
+    
+    /* background: linear-gradient(227.38deg, rgba(0, 72, 128, 0.904) 10.78%, #091C2C 70.8%); */
+
+body{
+    background-color: #e59500;
+}
+
+.body{
+    /* background-color: linear-gradient(100deg, #091C2C, #0262ac); */
+    opacity: 200rem;
+    display: flex; 
+    justify-content: center;
+    position: relative;
+}
+
+.estrutura{
+    padding: 5rem;
+    width:30%;
+    height: 35rem;
+    margin-top: 5%;
+    margin-bottom: 5%;
+    border-radius: 3%;
+    background-repeat: no-repeat;
+    background-color: #ffffff;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    margin-bottom: 12%;
+}
+
+.estd{
+    margin-top: -28%;
+    margin-bottom: 1%;
+    padding: 8%;
+    display:flex ;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#logol{
+    margin-bottom: 3rem;
+    margin-top: 2rem;
+    width: 100%;
+}
+
+form {
+    transition: all .3s ease-in-out;
+    display: flex;
+    flex-direction: column;
+}
+
+.input-field {
+    transition: all .3s ease-in-out;
+    outline: none;
+    position: relative;
+}
+
+form .input-field:first-child {
+    margin-bottom: 0.3rem;
+}
+
+.input-field .underline::before {
+    content: '';
+    position: absolute;
+    height: 2px;
+    width: 100%;
+    bottom: -7px;
+    left: 0;
+    background: #1A3E5A;
+}
+
+.input-field .underline::after {
+    content: '';
+    position: absolute;
+    height: 1px;
+    width: 100%;
+    bottom: -7px;
+    left: 0;
+    background: linear-gradient(45deg, #091C2C, #0262ac);
+    transform: scaleX(0);
+    transition: all .3s ease-in-out;
+    transform-origin: left;
+}
+
+.input-field input:focus ~ .underline::after {
+    transform: scaleX(1);
+}
+
+.input-field input {
+    border: 0;
+    outline: 0;
+    font-size: 1rem;
+    color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+}
+
+.input-field input::placeholder {
+    font-family: "Poppins", sans-serif;
+    color: rgba(0, 0, 0, 0.5);
+}
+
+form input[type="submit"] {
+    margin-top: 2rem;
+    padding: 0.7rem;
+    width: 100%;
+    background: linear-gradient(45deg, #091C2C, #00508d);
+    cursor: pointer;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 300;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+}
+
+form input[type="button"]:hover {
+    letter-spacing: 0.5px;
+    background:  linear-gradient(45deg, #e59500, #a76c00);
+    
+}
+
+form input[type="button"] {
+    margin-top: 2rem;
+    padding: 0.7rem;
+    width: 100%;
+    background: linear-gradient(45deg, #091C2C, #00508d);
+    cursor: pointer;
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 300;
+    border-radius: 30px;
+    transition: all 0.3s ease;
+}
+
+form input[type="submit"]:hover {
+    letter-spacing: 0.5px;
+    background:  linear-gradient(45deg, #e59500, #a76c00);
+    
+}
+.spa{
+    margin-top: 1%;
+   
+}
+
+.ou{
+    font-family: "Poppins", sans-serif;
+    font-size: 1.1rem;
+    display: flex;
+    justify-content: center;
+    margin-top: 3%;
+    margin-bottom: -5%;
+    color: #8f8f8f;
+}
+
+.linha {
+    content: '';
+    /* position: absolute; */
+    margin-top: 0.4rem;
+    height: 2px;
+    width: 100%;
+    margin-bottom: 1.5rem;
+    background: #1A3E5A;
+}
+
+.linha_m {
+    content: '';
+    position: absolute;
+    margin-top: 0.4rem;
+    height: 2px;
+    width: 100%;
+    margin-bottom: 1.5rem;
+    background: #ffffff;
+}
+
+.linha::after {
+    content: '';
+    position: absolute;
+    height: 1px;
+    width: 100%;
+    bottom: -7px;
+    left: 0;
+    background: linear-gradient(45deg, #091C2C, #0262ac);
+    transform: scaleX(0);
+    transition: all .3s ease-in-out;
+    transform-origin: left;
+}
