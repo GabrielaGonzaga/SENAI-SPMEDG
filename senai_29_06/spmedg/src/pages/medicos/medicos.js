@@ -46,6 +46,11 @@ class medicos extends Component{
         .catch(erro => console.log(erro))
     }
 
+    atualizaEstadoTitulo = async (campo) => {
+        await this.setState({ situacao : campo.target.value })
+        console.log(this.state.situacao)
+    };
+
     componentDidMount(){
         this.buscarConsultas();
     };
@@ -137,12 +142,13 @@ class medicos extends Component{
 
                                         <div id="rel">
                                             <img  id="iconesm" src={status} alt="icone realizada"/> 
-                                            <select className="selectm" id="select">
-                                                <option value="1">Realizada</option>
-                                                <option value="2">Agendada</option>
-                                                <option value="3">Cancelada</option>    
+                                            <select onSubmit={this.atualizaEstadoTitulo} className="selectm" id="select">
+                                                <option value="Realizada">Realizada</option>
+                                                <option value="Agendada">Agendada</option>
+                                                <option value="Cancelada">Cancelada</option>    
                                                 <p>{consulta.situacao}</p>
                                             </select>
+                                            <button type="submit" id="situb" value="novaconsulta">ok</button>
                                         </div>
 
                                         <div id="rel">

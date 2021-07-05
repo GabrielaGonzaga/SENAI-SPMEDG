@@ -10,8 +10,9 @@ import perfil from '../../assets/img/perfil.png';
 import medico from '../../assets/img/medicon.png';
 import calendario from '../../assets/img/calendario.png';
 import relogio from '../../assets/img/relogio.png';
+import paciente from '../../assets/img/paciicon.png';
 import status from '../../assets/img/status.png';
-
+import especialidade from '../../assets/img/especiali.png';
 import x from '../../assets/img/x.png';
 
 
@@ -40,6 +41,7 @@ class adm extends Component {
 
 
     buscarConsultas = () => {
+        console.log('buscando consultas')
         axios('http://localhost:5000/api/consultas', {
             headers : {
                 'Authorization' : 'Bearer ' + localStorage.getItem('usuario-login')
@@ -177,24 +179,50 @@ class adm extends Component {
                                 <form onSubmit={this.cadastrarConsulta}>
                                     <div className="input-field">
 
-                                        <select className="select" id="select2" name="idMedico">
+                                        <select onChange={this.atualizaStateCampo} className="select" id="select2" name="nome">
 
                                             {this.state.listaConsultas.map((consulta) => {
                                                 return (
-                                                    <option key={consulta.idConsulta}>{consulta.idMedico}</option>
+                                                    <option key={consulta.idConsulta}>{consulta.idMedicoNavigation.nome}</option>
                                                 )
                                             })
                                             }
 
                                         </select>
+
+                                    <select
+                                            // Instituição
+                                            name="idMedico"
+                                            // Define que o valor do input é o valor do state
+                                            value={this.state.idMedico}
+                                            // Chama a função para atualizar o state cada vez que há uma alteração no input
+                                            onChange={this.atualizaStateCampo}
+                                        >
+                                            <option value="0">Medico</option>
+
+                                            {/* Utiliza a função map() para preencher a lista de opções */}
+
+                                            {
+                                                // Percorre a lista de Instituições e retorna uma opção para cada instituição
+                                                // definindo o valor como seu próprio ID
+                                            this.state.listaConsultas.map( consulta=> {
+                                                return(
+                                                    <option key={consulta.idMedico} value={consulta.idMedico}>
+                                                        {consulta.idMedico}
+                                                    </option>
+                                                );
+                                            }   )
+                                        }
+                                    </select>
+                                        
                                     </div>
                                     <div className="input-field">
 
-                                        <select className="select" id="select2" name="idPaciente">
+                                        <select  onChange={this.atualizaStateCampo} className="select" id="select2" name="idPaciente">
 
                                             {this.state.listaConsultas.map((consulta) => {
                                                 return (
-                                                    <option key={consulta.idConsulta}>{consulta.idPaciente}</option>
+                                                    <option value="0" key={consulta.idConsulta}>{consulta.idPacienteNavigation.nome}</option>
                                                 )
                                             })
                                             }
@@ -207,13 +235,14 @@ class adm extends Component {
                                     <div className="input-field">
 
                                         <select className="selectnv" id="select" name="situacao">
-
-                                            {this.state.listaConsultas.map((consulta) => {
+                                            
+                                        {this.state.listaConsultas.map((consulta) => {
                                                 return (
                                                     <option key={consulta.idConsulta}>{consulta.situacao}</option>
                                                 )
                                             })
                                             }
+                                          
                                         </select>
                                     </div>
 
@@ -237,33 +266,25 @@ class adm extends Component {
                                             />
 
                                             <input
+                                                className="select4"
                                                 name="horaConsulta"
+                                                type="time"
                                                 value={this.state.horaConsulta}
                                                 onChange={this.atualizaStateCampo}
-                                                className="select4" type="time" >
+                                            >
                                             </input>
+
                                         </div>
                                         <h4 id="h4" >Especialidade</h4>
 
                                         <select name="Especialidade" className="select" id="select2">
-                                            <option value="1">Acupuntura</option>
-                                            <option value="2">Anestesiologia</option>
-                                            <option value="3">Angiologia</option>
-                                            <option value="4">Cardiologia</option>
-                                            <option value="5">Cirurgia Cardiovascular</option>
-                                            <option value="6">Cirurgia da Mão</option>
-                                            <option value="7">Cirurgia do Aparelho Digestivo</option>
-                                            <option value="8">Cirurgia Geral</option>
-                                            <option value="9">Cirurgia Pediátrica</option>
-                                            <option value="10">Cirurgia Plástica</option>
-                                            <option value="11">Cirurgia Torácica</option>
-                                            <option value="12">Cirurgia Vascular</option>
-                                            <option value="13">Dermatologia</option>
-                                            <option value="14">Radioterapia</option>
-                                            <option value="15">Urologia</option>
-                                            <option value="16">Pediatria</option>
-                                            <option value="17">Psiquiatria</option>
-
+                                                
+                                        {this.state.listaConsultas.map((consulta) => {
+                                                return (
+                                                    <option  key={consulta.idMedicoNavigation}>{consulta.idMedicoNavigation.idEspecialidadeNavigation.nomeEspecialidade}</option>
+                                                )
+                                            })
+                                        }
                                         </select>
 
                                         <button type="submit" id="agend" value="novaconsulta">Agendar</button>
@@ -279,7 +300,6 @@ class adm extends Component {
                         </div>
 
                     <div className="wrap">
-                            <div >
                                 {
                                     this.state.listaConsultas.map((consulta) => {
                                         return (
@@ -296,10 +316,10 @@ class adm extends Component {
                                                         <p id="ps" key={consulta.idConsulta}>{consulta.horaConsulta}</p>
                                                     </div>
 
-                                                    {/* <div id="rel">
+                                                    <div id="rel">
                                                         <img id="icones" src={paciente} alt="icone paciente" name="nome" />
                                                         <p id="pn">{consulta.idPacienteNavigation.nome}</p>
-                                                    </div> */}
+                                                    </div>
 
                                                     <div id="rel">
                                                         <img id="icones" src={medico} alt="icone médico" name="nome" />
@@ -311,10 +331,10 @@ class adm extends Component {
                                                         <p id="ps" key={consulta.idConsulta}>{consulta.situacao}</p>
                                                     </div>
 
-                                                    {/* <div id="rel">
+                                                     <div id="rel">
                                                         <img id="icones" src={especialidade} alt="icone especialidade" name="nomeEspecialidade" />
                                                          <p id="ps">{consulta.idMedicoNavigation.idEspecialidadeNavigation.nomeEspecialidade}</p> 
-                                                    </div> */}
+                                                    </div> 
                                                 </div>
 
                                             </div>
@@ -329,10 +349,6 @@ class adm extends Component {
 
                     </div>
                 </div>
-
-            </div>
-
-
         );
     }
 };

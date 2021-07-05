@@ -323,6 +323,22 @@ h6{
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
 }
 
+#situb {
+    border:  0;
+    margin-top: 0.5rem;
+    margin-left: 0.6rem;
+    height: 1.9rem;
+    width: 2rem;
+    background: #c07e03;
+    cursor: pointer;
+    color: white;
+    font-size: 1rem;
+    font-weight: 300;
+    border-radius:  3px 0px 3px 3px;
+    transition: all 0.3s ease;
+    box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+}
+
 .conten{
     position: fixed;
     width: 1000%;
