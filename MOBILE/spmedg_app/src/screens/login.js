@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
 import { LinearGradient } from "expo-linear-gradient";
 import { Image,ImageBackground, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import api from './api';
+import api from '../services/api';
+
+import login from './login';
+
 
 export default class Login extends Component{
   constructor(props){
@@ -12,27 +15,36 @@ export default class Login extends Component{
     };
   }
 
-  buscarConsultas = async () =>{
-    const resposta = await api.get('/consultas')
+  realizarLogin = async () => {
+    console.warn( this.state.email + ' ' + this.state.senha );
 
-    const dadosDaApi = resposta.data;
-    this.setState({listaConsultas : dadosDaApi});
-  };
+    const resposta = await api.post('/logins', {
+        email : this.state.email,
+        senha : this.state.senha
+    });
 
-  componentDidMount(){
-    this.buscarConsultas();
-  }
+    const token = resposta.data.token;
+    console.warn(token);
+
+    await AsyncStorage.setItem('userToken', token);
+
+    this.props.navigation.navigate('Consultas');
+};
+
 
 render(){
     return(
-      <ScrollView scrollEnabled={false} nestedScrollEnabled={false}>
+      <ScrollView>
         <LinearGradient  colors={['#091C2C','#0262ac']}>
-          <View style={{flex: 1,  alignItems: 'center', marginTop:'3rem'}}>
+          <View style={{flex: 1,  alignItems: 'center', justifyContent:'center',  marginTop:'30rem', marginTop:90}}>
             
             <View  style={styles.container}>
               <View style={styles.containerL}>
-                <Image 
-                    source={require('./assets/img/logo.jpeg')} style={styles.imgLogin}/>
+
+              <View style={{flex: 1,  alignItems: 'center', justifyContent:'center'}}> 
+                <Image source={require('./assets/img/logo.jpeg')} style={styles.logo}/>
+              </View>
+               
 
                 <Text style={styles.txlogin}>Login</Text>
                 <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -67,34 +79,34 @@ render(){
                     onPress={this.realizarLogin}
                     >
                     <LinearGradient colors={['#091C2C','#00508d']}  
-                    style={{width:'100%', height:'2rem', borderRadius: 30, textAlign: 'center', marginTop:'2rem', }}>
+                    style={{width:'100%', height:30, borderRadius: 30, textAlign: 'center', marginTop:'2rem', }}>
 
                       <Text style={styles.btntx}>Entrar</Text>
 
                     </LinearGradient>
               </TouchableOpacity>
 
-              <View style={{flex: 1,  alignItems: 'center'}}>
+              {/* <View style={{flex: 1,  alignItems: 'center'}}>
                 <Text style={styles.outx}>ou</Text>
-              </View>
+              </View> */}
 
-              <TouchableOpacity
+              {/* <TouchableOpacity
                     style={{flex: 1,  alignItems: 'center'}}
                     onPress={this.realizarLogin}
                     >
                     <LinearGradient colors={['#091C2C','#00508d']}  
                     style={{width:'100%', height:'2rem', borderRadius: 30, textAlign: 'center', marginTop:'1rem', }}>
 
-                      <Text style={styles.btntx}>Entrar</Text>
+                      <Text style={styles.btntx}>Cadastre-se</Text>
 
                     </LinearGradient>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
 
             </View>
           </View>
         </View>
       </LinearGradient>
-    </ScrollView>
+   </ScrollView>
     );
   }
 }
@@ -103,8 +115,9 @@ const styles = StyleSheet.create({
   container: {
     borderRadius: 10,
     width:'90%',
+    height:1000,
     backgroundColor: '#F1F1F1',
-    marginTop: 10,
+    marginTop: '20rem',
     marginBottom:'110%',
     flex: 1,  
     alignItems: 'center', 
@@ -116,29 +129,32 @@ const styles = StyleSheet.create({
     width:'70%',
     backgroundColor: '#F1F1F1',
     marginTop: 50,
-    marginBottom:'25%'
+    marginBottom:20
+  },
+
+  logo:{ 
+    width: 200,
+    height: 70,
+    marginBottom:10,
   },
 
   txlogin: {
     color: '#1A3E5A',
-    fontWeight: 'bold',
-    fontSize: '2rem',
-    fontfamily: 'Poppins-Meddium',
+    fontWeight: 'normal',
+    fontSize: 38,
   },
   red: {
     color: 'red',
   },
 
   inputs:{
-    marginTop:'2rem',
+    marginTop:20,
     flex:1,
-    fontSize: '1rem',
+    fontSize: 15,
     alignContent: 'center',
     justifyContent: 'center',
     alignItems: "stretch",
-    color: '#f1f1f1f',
-    textDecorationStyle:'none',
-    borderBottomWidth: 'hairlineWidth',
+    color: 'gray',
   },
 
   line:{
@@ -149,7 +165,7 @@ const styles = StyleSheet.create({
   },
 
   linelo:{
-    marginTop:'-0.2rem',
+    marginTop:-20,
     width:'15%',
     height: 2, 
    // backgroundColor: '#E59500'
@@ -161,13 +177,13 @@ const styles = StyleSheet.create({
   },
 
   btntx: {
-    marginTop:'0.4rem',
+    marginTop: 6,
     color: '#FFF',
     alignItems: 'center', 
   },
 
   outx: {
-    fontSize: '1.1rem',
+    fontSize: 15,
     marginTop:'1rem',
     color: 'grey',
     alignItems: 'center', 
