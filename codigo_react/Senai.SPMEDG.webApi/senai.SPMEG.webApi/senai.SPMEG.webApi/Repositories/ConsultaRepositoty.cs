@@ -107,7 +107,7 @@ namespace senai.SPMEG.webApi.Repositories
 
             .Include(c => c.IdMedicoNavigation)
 
-             .Include(c => c.IdPacienteNavigation.IdUsuarioNavigation)
+            .Include(c => c.IdPacienteNavigation.IdUsuarioNavigation)
 
             .Include(c => c.IdMedicoNavigation.IdUsuarioNavigation)
 

@@ -1,0 +1,518 @@
+C:\Users\42646238800\AppData\Roaming\npm\expo start
+C:\Users\42646238800\AppData\Roaming\npm install @react-navigation/bottom-tabs
+
+
+import React, { Component } from 'react';
+import { FlatList, Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+import api from './api';
+
+
+const bottomTab = createBottomTabNavigator();
+
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      listaConsultas : []
+    }
+  }
+
+  buscarEventos = async () => {
+    const resposta = await api.get('/consultas');
+    // const dadosDaApi = resposta.data;
+    this.setState({ listaConsultas : resposta.data })
+    console.log(this.state.listaConsultas)
+  };
+
+  componentDidMount() {
+    // Realiza a chamada para a API trazendo todos os eventos
+    this.buscarEventos();
+  };
+
+  // inscrever = async (item) => {
+  //   console.warn(item);
+
+  //   try {
+      
+  //     const valorToken = await AsyncStorage.getItem('userToken');
+
+  //     await api.post('/presencas/inscricao/' + item.idEvento, {}, {
+  //       headers : {
+  //         'Authorization' : 'Bearer ' + valorToken
+  //       }
+  //     });
+
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+
+  render(){
+    return (
+     <View style={{flex: 1,   justifyContent:'center'}}>
+       <View  style={styles.container}>
+          <Image source={require('./assets/img/calendario.png')}style={styles.calen} />
+          <Text style={styles.texts}>20/11/2020</Text>
+       </View>
+     </View>
+    );
+  }
+
+//   renderItem = ({ item }) => (
+//     // <Text style={{ fontSize: 20, color: 'red' }}>{item.nomeEvento}</Text>
+
+//     <View style={styles.flatItemRow}>
+//       <View style={styles.flatItemContainer}>
+//         <Text style={styles.flatItemTitle}>{item.nomeEvento}</Text>
+//         <Text style={styles.flatItemInfo}>{item.descricao}</Text>
+//         <Text style={styles.flatItemInfo}>{Intl.DateTimeFormat('pt-BR').format(new Date(item.dataEvento))}</Text>
+//       </View>
+
+//       <TouchableOpacity
+//         onPress={ () => this.inscrever(item) }
+//         style={styles.flatItemImg}
+//       >
+//         <View>
+//           <Image 
+//             source={require('../../assets/img/view.png')}
+//             style={styles.flatItemImgIcon}
+//           />
+//         </View>
+//       </TouchableOpacity>
+      
+//     </View>
+//   )
+
+// }
+}
+const styles = StyleSheet.create({
+
+ container:{
+  
+ },
+
+  calen:{
+  width: 22,
+  height: 22,
+  tintColor: '#1a3e5a',
+  marginRight: -5,
+  marginTop: -12
+},
+
+});
+
+
+-------------------------------------------------------------------------------------------------------------------
+
+
+import React, { Component } from 'react';
+import { LinearGradient } from "expo-linear-gradient";
+import { Image,ImageBackground, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import api from '../services/api';
+
+import login from './login';
+
+
+export default class Login extends Component{
+  constructor(props){
+    super(props);
+    this.state = {
+      email : '',
+      senha : ''
+    };
+  }
+
+  realizarLogin = async () => {
+    console.warn( this.state.email + ' ' + this.state.senha );
+
+    const resposta = await api.post('/logins', {
+        email : this.state.email,
+        senha : this.state.senha
+    });
+
+    const token = resposta.data.token;
+    console.warn(token);
+
+    await AsyncStorage.setItem('userToken', token);
+
+    this.props.navigation.navigate('Consultas');
+};
+
+
+render(){
+    return(
+      <ScrollView>
+        <LinearGradient  colors={['#091C2C','#0262ac']}>
+          <View style={{flex: 1,  alignItems: 'center', justifyContent:'center',  marginTop:'30rem', marginTop:90}}>
+            
+            <View  style={styles.container}>
+              <View style={styles.containerL}>
+
+              <View style={{flex: 1,  alignItems: 'center', justifyContent:'center'}}> 
+                <Image source={require('./assets/img/logo.jpeg')} style={styles.logo}/>
+              </View>
+               
+
+                <Text style={styles.txlogin}>Login</Text>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+
+                <LinearGradient colors={['#e59500','#a76c00']} style={styles.linelo}>
+                  <View  style={styles.linelo}  />
+                </LinearGradient>
+                </View>
+                
+                <TextInput 
+                      style={styles.inputs}
+                      placeholder='Digite seu email'
+                      keyboardType='email-address'
+                      onChangeText={email => this.setState({ email })}/>
+
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <View style={styles.line} />
+                </View>
+              
+                <TextInput 
+                        style={styles.inputs}
+                        placeholder='Digite sua senha'
+                        secureTextEntry={true}
+                        onChangeText={senha => this.setState({ senha })}/>
+
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <View style={styles.line} />        
+              </View>
+
+              <TouchableOpacity
+                    style={{flex: 1,  alignItems: 'center'}}
+                    onPress={this.realizarLogin}
+                    >
+                    <LinearGradient colors={['#091C2C','#00508d']}  
+                    style={{width:'100%', height:30, borderRadius: 30, textAlign: 'center', marginTop:'2rem', }}>
+
+                      <Text style={styles.btntx}>Entrar</Text>
+
+                    </LinearGradient>
+              </TouchableOpacity>
+
+              {/* <View style={{flex: 1,  alignItems: 'center'}}>
+                <Text style={styles.outx}>ou</Text>
+              </View> */}
+
+              {/* <TouchableOpacity
+                    style={{flex: 1,  alignItems: 'center'}}
+                    onPress={this.realizarLogin}
+                    >
+                    <LinearGradient colors={['#091C2C','#00508d']}  
+                    style={{width:'100%', height:'2rem', borderRadius: 30, textAlign: 'center', marginTop:'1rem', }}>
+
+                      <Text style={styles.btntx}>Cadastre-se</Text>
+
+                    </LinearGradient>
+              </TouchableOpacity> */}
+
+            </View>
+          </View>
+        </View>
+      </LinearGradient>
+   </ScrollView>
+    );
+  }
+}
+
+const styles = StyleSheet.create({
+  container: {
+    borderRadius: 10,
+    width:'90%',
+    height:1000,
+    backgroundColor: '#F1F1F1',
+    marginTop: '20rem',
+    marginBottom:'110%',
+    flex: 1,  
+    alignItems: 'center', 
+    marginTop:'3rem'
+  },
+
+  containerL: {
+    borderRadius: 30,
+    width:'70%',
+    backgroundColor: '#F1F1F1',
+    marginTop: 50,
+    marginBottom:20
+  },
+
+  logo:{ 
+    width: 200,
+    height: 70,
+    marginBottom:10,
+  },
+
+  txlogin: {
+    color: '#1A3E5A',
+    fontWeight: 'normal',
+    fontSize: 38,
+  },
+  red: {
+    color: 'red',
+  },
+
+  inputs:{
+    marginTop:20,
+    flex:1,
+    fontSize: 15,
+    alignContent: 'center',
+    justifyContent: 'center',
+    alignItems: "stretch",
+    color: 'gray',
+  },
+
+  line:{
+    width:'100%',
+    flex: 1, 
+    height: 2, 
+    backgroundColor: '#1A3E5A'
+  },
+
+  linelo:{
+    marginTop:-20,
+    width:'15%',
+    height: 2, 
+   // backgroundColor: '#E59500'
+   //lineargradient
+  },
+
+  imgLogin:{
+    width:'30px',
+  },
+
+  btntx: {
+    marginTop: 6,
+    color: '#FFF',
+    alignItems: 'center', 
+  },
+
+  outx: {
+    fontSize: 15,
+    marginTop:'1rem',
+    color: 'grey',
+    alignItems: 'center', 
+  },
+
+});
+
+
+--------------------------------------------------------------------------------------------------------
+
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+
+import Login from './src/screens/login';
+import Main from './src/screens/consultas';
+
+const AuthStack = createStackNavigator();
+
+export default function Stack(){
+  return(
+    <NavigationContainer>
+      <AuthStack.Navigator
+        headerMode = 'none'
+      >
+        <AuthStack.Screen name = 'Login' component={Login} />
+        <AuthStack.Screen name = 'Consultas' component={Main} />
+      </AuthStack.Navigator>
+    </NavigationContainer>
+  )
+}
+
+---------------------------------------------------------------------------------------------------
+
+import React, { Component } from 'react';
+import { LinearGradient } from "expo-linear-gradient";
+import { FlatList, Image, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
+import Consultas from './medicos';
+import Pacientes from './pacientes';
+
+
+const bottomTab = createBottomTabNavigator();
+
+import api from '../services/api';
+
+export default class App extends Component {
+  constructor(props) {
+    super(props); 
+    this.state = {
+      listaConsultas : []
+    }
+  }
+
+  buscarConsultas= async () => {
+    const resposta = await api.get('/consultas');
+    // const dadosDaApi = resposta.data;
+    this.setState({ listaConsultas : resposta.data })
+    console.log(this.state.listaConsultas)
+  };
+
+  componentDidMount() {
+    // Realiza a chamada para a API trazendo todos os eventos
+    this.buscarConsultas();
+  };
+
+
+  render(){
+    return (
+    <ScrollView >
+      <View>
+      
+        <LinearGradient colors={['#fffbf5']}>
+            <View style={{}}>
+              <View style={{flex: 1,  alignItems: 'center', justifyContent:'center', margin:10,}}> 
+                <Image source={require('../../assets/img/logo.png')} style={styles.logo}/>
+              </View> 
+              <View style={{flex: 1,  alignItems: 'center', justifyContent:'center',  marginTop:10}}>
+                {/* <Text style={styles.txmi}>Minhas Consultas</Text> */}
+              </View>
+              
+              <View style={{flex: 1,   justifyContent:'center'}}>
+                <View style={styles.mainBody}>
+                  <FlatList
+                    contentContainerStyle={styles.list}
+                    data={this.state.listaConsultas}
+                    keyExtractor={ item => item.idConsulta }
+                    renderItem={this.renderItem}
+                 />
+              </View>
+          </View>
+        </View>
+       </LinearGradient>
+
+      
+       </View>
+       <bottomTab.Navigator
+        initialRouteName= 'Consultas'
+        
+        tabBarOptions={{
+            showLabel: false,
+            showIcon: true,
+            activeBackgroundColor: '#1A3E5A',
+            inactiveBackgroundColor: '#dba848',
+            activeTintColor: '#FFF',
+            style: { height : 50, position:'fixed' }
+        }}
+        screenOptions={({ route }) => ({
+
+            tabBarIcon: () => {
+            if (route.name === 'Consultas') {
+                return(
+                <Image
+                    source={require('../../assets/img/userm.png')}
+                    style={styles.icontab}
+                />
+                )
+            }else{
+              return(
+                <Image 
+                    source={require('../../assets/img/appo.png')}
+                    style={styles.icontab}
+                />
+                )
+            }
+            }
+        }) }
+        >
+            <bottomTab.Screen name="Consultas" component={Consultas} />
+            <bottomTab.Screen name="Pacientes" component={Pacientes} />
+        </bottomTab.Navigator>
+       </ScrollView>
+    );
+  }
+
+  renderItem = ({ item }) => (
+
+    <View style={styles.container}>
+      <View style={{flex: 1,  flexDirection:'row' }}>
+        <Image source={require('../../assets/img/calendario.png')}style={styles.icons} />
+        <Text style={styles.texts}>{item.situacao}</Text>
+       </View> 
+
+       <View  style={{flex: 1,  flexDirection:'row' }}>
+       <Image source={require('../../assets/img/relogio.png')}style={styles.icons} />
+        <Text style={styles.texts}>{Intl.DateTimeFormat('pt-BR').format(new Date(item.dataConsulta))}</Text>
+      </View>
+
+      <View style={{flex: 1,  flexDirection:'row' }}>
+        <Image source={require('../../assets/img/paciicon.png')}style={styles.icons} />
+        <Text style={styles.texts}>{item.idPacienteNavigation.nome}</Text>
+       </View> 
+
+       <View style={{flex: 1,  flexDirection:'row' }}>
+        <Image source={require('../../assets/img/status.png')}style={styles.icons} />
+        <Text style={styles.texts}>{item.situacao}</Text>
+       </View> 
+
+       <View style={{flex: 1,  flexDirection:'row' }}>
+        <Image source={require('../../assets/img/especiali.png')}style={styles.icons} />
+        <Text style={styles.texts}>{item.idMedicoNavigation.idEspecialidadeNavigation.nomeEspecialidade}</Text>
+       </View> 
+    </View>
+  )
+
+}
+
+const styles = StyleSheet.create({
+
+  icons:{
+  marginLeft:35,
+  margin:6,
+  width: 22,
+  height: 22,
+  marginRight:15,
+},
+
+container:{
+  margin:50,
+  backgroundColor:'white',
+  flex:1,
+  border: '2.6px solid #1A3E5A',
+  marginTop:-0.1,
+  marginBottom:30,
+  shadowOffset:{  width: 2,  height: 1.9,  },
+  shadowColor: ' rgba(0, 0, 0, 0.25)',
+},
+
+logo:{ 
+  // tintColor:'white',
+  width: 160,
+  height: 70,
+},
+
+texts:{
+  margin:3,
+  marginBottom:5,
+  color: 'black',
+  fontWeight: 'normal',
+  fontSize: 20,
+},
+
+txmi: {
+  textTransform: 'uppercase',
+  marginTop:-20,
+  color: '#1A3E5A',
+  fontWeight: 'meddium',
+  fontSize: 25,
+},
+
+icontab:{
+  margin:6,
+  width: 26,
+  height: 30,
+  tintColor:'white'
+}
+
+});
+
+
+

@@ -8,7 +8,9 @@ using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 
 namespace senai.SPMEG.webApi
@@ -29,8 +31,15 @@ namespace senai.SPMEG.webApi
                     options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
                 });
 
-            services
-                .AddSwaggerGen();
+            services.AddSwaggerGen(c => {
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "SPMEDG.webApi", Version = "v1" });
+
+                // Set the comments path for the Swagger JSON and UI.
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
+            });
+
 
             services
                //Forma de autentica��o
@@ -93,8 +102,9 @@ namespace senai.SPMEG.webApi
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "senai.SPMEDG.webApi ");
+                c.RoutePrefix = string.Empty;
             });
-
+            
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
